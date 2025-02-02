@@ -1,0 +1,54 @@
+trigger:
+- main  # Trigger pipeline on changes to the main branch
+
+pool:
+  name: 'Default'  # self-hosted agent
+
+variables:
+  resourceGroupName: 'acr'  # Replace with your Azure resource group name
+  storageAccountName: 'remotetf'  # Replace with your Azure storage account name
+  containerName: 'tfstate'  # Replace with your container name for Terraform state
+
+steps:
+- checkout: self  # Check out the GitHub repository
+
+- script: |
+    echo "Logging into Azure using managed identity..."
+    az login --identity  # Authenticate using the managed identity
+
+    echo "Checking if storage account $(storageAccountName) exists..."
+    if ! az storage account show --name $(storageAccountName) --resource-group $(resourceGroupName) --output none 2>/dev/null; then
+      echo "Storage account does not exist. Creating storage account..."
+      az storage account create --name $(storageAccountName) --resource-group $(resourceGroupName) --location eastus --sku Standard_LRS
+    else
+      echo "Storage account already exists. Skipping creation."
+    fi
+
+    echo "Checking if container $(containerName) exists..."
+    if ! az storage container show --name $(containerName) --account-name $(storageAccountName) --output none 2>/dev/null; then
+      echo "Container does not exist. Creating container..."
+      az storage container create --name $(containerName) --account-name $(storageAccountName)
+    else
+      echo "Container already exists. Skipping creation."
+    fi
+  displayName: 'Setup Terraform Backend'
+
+- script: |
+    echo "Initializing Terraform..."
+    terraform init -backend-config="resource_group_name=$(resourceGroupName)" -backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="key=terraform.tfstate"
+  displayName: 'Initialize Terraform'
+
+- script: |
+    echo "Validating Terraform configuration..."
+    terraform validate
+  displayName: 'Validate Terraform Configuration'
+
+- script: |
+    echo "Running Terraform plan..."
+    terraform plan -out=tfplan
+  displayName: 'Terraform Plan'
+
+- script: |
+    echo "Applying Terraform configuration..."
+    terraform apply -auto-approve tfplan
+  displayName: 'Apply Terraform Configuration'

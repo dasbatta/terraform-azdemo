@@ -8,6 +8,8 @@ variables:
   resourceGroupName: 'acr'  # Replace with your Azure resource group name
   storageAccountName: 'dbattaremotetf'  # Replace with your Azure storage account name
   containerName: 'dbattatfstate'  # Replace with your container name for Terraform state
+  # Define the secret variable at the top of the YAML file
+  public_ip_address: $(public_ip_address)  # Reference the secret pipeline variable
 
 steps:
 - checkout: self  # Check out the GitHub repository

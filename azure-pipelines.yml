@@ -6,8 +6,8 @@ pool:
 
 variables:
   resourceGroupName: 'acr'  # Replace with your Azure resource group name
-  storageAccountName: 'remotetf'  # Replace with your Azure storage account name
-  containerName: 'tfstate'  # Replace with your container name for Terraform state
+  storageAccountName: 'dbattaremotetf'  # Replace with your Azure storage account name
+  containerName: 'dbattatfstate'  # Replace with your container name for Terraform state
 
 steps:
 - checkout: self  # Check out the GitHub repository

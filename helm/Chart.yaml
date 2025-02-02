@@ -1,0 +1,4 @@
+apiVersion: v2
+name: webapp
+description: A Helm chart for a Web App that accesses MongoDB
+version: 1.0.0

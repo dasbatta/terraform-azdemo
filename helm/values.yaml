@@ -1,0 +1,21 @@
+image:
+  repository: wizdemo.azurecr.io/app
+  tag: latest
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+secret:
+  enabled: true
+  mongodbUri: ""
+  secretKey: ""
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080

@@ -135,7 +135,7 @@ resource "null_resource" "post_provisioning" {
 
     connection {
       type        = "ssh"
-      host        = self.public_ip_address
+      host        = azurerm_linux_virtual_machine.demo.public_ip_address
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }

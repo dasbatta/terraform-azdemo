@@ -16,5 +16,5 @@ variable "node_count" {
 variable "public_ip_address" {
   description = "Your public IP address for ssh access to the VM"
   type        = string
-  default     = "71.238.40.155"
+  default     = "52.191.60.201"
 }

@@ -73,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "demo" {
 
     connection {
       type        = "ssh"
-      host        = azurerm_linux_virtual_machine.demo.public_ip_address
+      host        = self.public_ip_address
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }
@@ -84,7 +84,7 @@ resource "azurerm_linux_virtual_machine" "demo" {
     destination = "/tmp/cronjob.sh"
     connection {
       type        = "ssh"
-      host        = azurerm_linux_virtual_machine.demo.public_ip_address
+      host        = self.public_ip_address
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }
@@ -103,7 +103,7 @@ resource "azurerm_linux_virtual_machine" "demo" {
 
     connection {
       type        = "ssh"
-      host        = azurerm_linux_virtual_machine.demo.public_ip_address
+      host        = self.public_ip_address
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }
@@ -135,7 +135,7 @@ resource "null_resource" "post_provisioning" {
 
     connection {
       type        = "ssh"
-      host        = azurerm_linux_virtual_machine.demo.public_ip_address
+      host        = self.public_ip_address
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }

@@ -77,6 +77,7 @@ resource "azurerm_linux_virtual_machine" "demo" {
       user        = "azureuser"
       private_key = file(local_file.private_key.filename)
     }
+    depends_on = [azurerm_public_ip.vm]  # Ensure public IP is available before running
   }
   # Copy the cronjob to create mongodb backups
   provisioner "file" {

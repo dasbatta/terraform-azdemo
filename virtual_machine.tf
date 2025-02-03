@@ -63,7 +63,7 @@ resource "azurerm_linux_virtual_machine" "demo" {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
-    version   = "18.04.201908220"
+    version   = "18.04.202401161"
   }
 
   # Copy script and install the previous major mongodb version

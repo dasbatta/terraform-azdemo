@@ -11,9 +11,6 @@ variables:
 
 steps:
 - checkout: self  # Check out the GitHub repository
-- script: |
-    echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID]$(subscription_id)"
-  displayName: 'Set Subscription ID Environment Variable'
 
 - script: |
     echo "Logging into Azure using managed identity..."

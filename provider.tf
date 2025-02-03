@@ -1,5 +1,6 @@
 provider "azurerm" {
   features {}
+  subscription_id = getenv("AZURE_SUBSCRIPTION_ID")
 }
 
 provider "helm" {
